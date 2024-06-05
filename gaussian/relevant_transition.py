@@ -106,53 +106,19 @@ def ABS(path_file_TD):
     return WL,I
 
 
-
-wl,f = ABS('D:/STAGE/Rh3Per/V1/SINGLETS/tdss_flatbis_RhIIIphenP-v1_1_S_pbe0.com.out')   #path of your Singlet absorption file
-
-# This function create the gaussian expansion of the dirac signals
-def spectrum(wl,osc,sigma,x):
-    gwl=[]
-    for wli in x:
-        tot=0
-        for wlj,fi in zip(wl,osc):
-            tot += fi*np.exp(-(((h*c/(wlj*10**(-9)))-h*c/(wli*10**(-9)))/sigma)**2)
-        gwl.append(tot)
-    return gwl
-
-
-# Parameters to adjust for your file
-x=np.linspace(160,1000, num=25000, endpoint=True) # x serve as a fictionnal wavelength that will expand the signals
-sigma=0.35
-
-fig, ax = plt.subplots(figsize=(8, 6))  # Adjust figsize as needed
-
-# Plot vertical sticks for oscillation strengths
-for wli, osc_strength in zip(wl, f):
-    ax.plot((wli, wli), (0, osc_strength), c="k", linewidth=1.5, linestyle="-")  # Adjust linewidth for sharper sticks
-
-# Plot transient absorption spectrum
-gwl = spectrum(wl, f, sigma, x)
-ax.plot(x, gwl, "m", linewidth=2.0, label='Absorption spectrum (PBE0/def2svp)')
-
-# Customize plot labels, ticks, and appearance
-ax.set_xlabel("Wavelength (nm)", fontsize=14)
-ax.set_ylabel("Oscillation Strength", fontsize=14)
-ax.tick_params(axis='both', which='major', labelsize=12)
-ax.grid(True)
-ax.set_xlim(250, 830)
-ax.set_ylim(0,1.5)
-
-
-# Customize spine appearance for aesthetics
-for spine in ax.spines.values():
-    spine.set_linewidth(1.5)
-
-
-# Show legend for the transient absorption plot
-ax.legend(fontsize=12, loc='upper right')
-
-# Tighten layout and save the plot
-plt.tight_layout()
-plt.savefig('D:/STAGE/Rh3Per/V1/SINGLETS/tdss_flatbis_RhIIIphenP-v1_1_S_pbe0.png', dpi=300)
-
-plt.show()
+wl,f = ABS('D:/STAGE/Rh3Per/V1/SINGLETS/tdss_fatlatRhIIIphenP-v1_1_S_pbe0.com.out')   #path of your Singlet absorption file
+#e=[]
+#for i in wl:
+#    e.append(h*c/(i*10**(-9)))
+    
+#print(f[0],e[0],wl[0])
+states=[]
+wltrans=[]
+Energy=[]
+for i in range(len(f)):
+    states.append([i+1,f[i],h*c/(wl[i]*10**(-9)),wl[i]])
+    wltrans.append(wl[i])
+    Energy.append(h*c/(wl[i]*10**(-9)))
+print(states)
+print(wltrans)    
+    
